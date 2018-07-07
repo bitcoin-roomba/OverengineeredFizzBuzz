@@ -33,7 +33,7 @@ public class TextInterface {
 			throw new IllegalArgumentException("start > end");
 		}
 		
-		System.out.println("input rules in desired order, alpahnumeric word and positive integer separated by underscore, rules separated by comma, e.g.:");
+		System.out.println("input rules in desired order, alphanumeric word and positive integer separated by underscore, rules separated by comma, e.g.:");
 		System.out.println("Fizz_5,Buzz_7,asdg67g_4");
 		input = inputscan.nextLine();
 		if (!input.matches("([a-zA-Z0-9]+[_][0-9]+)([,]([a-zA-Z0-9]+[_][0-9]+))*")) {
