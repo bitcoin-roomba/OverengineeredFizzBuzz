@@ -38,4 +38,12 @@ public class FizzBuzz {
 			System.out.println(getLine(i));
 		}
 	}
+	
+	public LinkedList<String> getOutput() {
+		LinkedList<String> output = new LinkedList<String>();
+		for (int i = this.start; i <= this.limit; i++) {
+			output.add(getLine(i));
+		}
+		return output;
+	}
 }
