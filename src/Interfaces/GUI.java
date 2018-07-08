@@ -1,10 +1,10 @@
 package Interfaces;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import FizzBuzzCore.*;
@@ -18,7 +18,7 @@ public class GUI {
 
 	public static void start() {
 		JFrame mainframe = new JFrame("FizzBuzz++");
-		mainframe.setSize(400, 300);
+		mainframe.setSize(500, 300);
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainframe.setResizable(false);
         JPanel mainpanel = new JPanel();
@@ -34,12 +34,21 @@ public class GUI {
         numentry.setToolTipText("Number goes here");
         numentry.setText("3");
         
+        JTextField start = new JTextField();
+        start.setToolTipText("start of intervall");
+        start.setText("1");
+        
+        JTextField end = new JTextField();
+        end.setToolTipText("end of intervall");
+        end.setText("100");
+        
         JButton add = new JButton("Add Rule");
         JButton clear = new JButton("Clear Rules");
         JButton run = new JButton("Run");
         
         JTextArea ruleview = new JTextArea();
         ruleview.setEditable(false);
+        JScrollPane rulepane = new JScrollPane(ruleview);
         
         
         
@@ -48,13 +57,19 @@ public class GUI {
         c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 3;
+        c.gridwidth = 2;
         c.ipady = 20;
         mainpanel.add(instructions, c);
-        c.gridy = 1;
-        c.gridwidth = 2;
-        mainpanel.add(wordentry, c);
+        c.gridwidth = 1;
         c.gridx = 2;
+        mainpanel.add(start, c);
+        c.gridx = 3;
+        mainpanel.add(end, c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        mainpanel.add(wordentry, c);
+        c.gridx = 3;
         c.gridwidth = 1;
         mainpanel.add(numentry, c);
         c.gridy = 2;
@@ -63,16 +78,63 @@ public class GUI {
         c.gridx = 1;
         mainpanel.add(clear, c);
         c.gridx = 2;
+        c.gridwidth = 2;
         mainpanel.add(run, c);
         c.gridy = 3;
         c.gridx = 0;
         c.gridheight = 2;
-        c.gridwidth = 3;
-        mainpanel.add(ruleview, c);
+        c.gridwidth = 4;
+        c.ipady = 100;
+        mainpanel.add(rulepane, c);
         
         
         rulestring = new String("");
         buzzwords = new LinkedList<Buzzword>();
+        
+        add.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buzzwords.add(new Buzzword(Integer.parseInt(numentry.getText()), wordentry.getText()));
+				rulestring = rulestring.concat(numentry.getText() + " | " + wordentry.getText() + "\n");
+				ruleview.setText(rulestring);
+				wordentry.setText("");
+				numentry.setText("");
+			}
+        	
+        });
+        
+        clear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rulestring = new String("");
+				buzzwords = new LinkedList<Buzzword>();
+				ruleview.setText(rulestring);
+				wordentry.setText("Fizz");
+				numentry.setText("3");
+			}
+        	
+        });
+        
+        run.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FizzBuzz(Integer.parseInt(start.getText()), Integer.parseInt(end.getText()), buzzwords).run();
+				JFrame outputframe = new JFrame("Output");
+				outputframe.setSize(400, 400);
+				outputframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				JPanel outpane = new JPanel();
+				outpane.setLayout(new BorderLayout());
+				JTextArea output = new JTextArea();
+				output.setEditable(false);
+				JScrollPane outscroll = new JScrollPane(output);
+				outputframe.add(outpane);
+				outpane.add(outscroll, BorderLayout.CENTER);
+				
+				
+				outputframe.setVisible(true);
+			}
+        	
+        });
         
         mainframe.setVisible(true);
 	}
