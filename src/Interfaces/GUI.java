@@ -118,20 +118,23 @@ public class GUI {
         run.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FizzBuzz(Integer.parseInt(start.getText()), Integer.parseInt(end.getText()), buzzwords).run();
+				LinkedList<String> out = new FizzBuzz(Integer.parseInt(start.getText()), Integer.parseInt(end.getText()), buzzwords).getOutput();
 				JFrame outputframe = new JFrame("Output");
 				outputframe.setSize(400, 400);
 				outputframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				JPanel outpane = new JPanel();
 				outpane.setLayout(new BorderLayout());
-				JTextArea output = new JTextArea();
+				JTextArea output = new JTextArea("");
 				output.setEditable(false);
 				JScrollPane outscroll = new JScrollPane(output);
 				outputframe.add(outpane);
 				outpane.add(outscroll, BorderLayout.CENTER);
 				
-				
 				outputframe.setVisible(true);
+				
+				for (String x : out) {
+					output.setText(output.getText().concat(x).concat("\n"));
+				}
 			}
         	
         });
