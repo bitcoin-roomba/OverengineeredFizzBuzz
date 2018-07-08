@@ -8,7 +8,7 @@ import FizzBuzzCore.FizzBuzz;
 
 public class TextInterface {
 
-	public static void main(String[] args) {
+	public static void start() {
 		Scanner inputscan = new Scanner(System.in);
 		System.out.println("input limit, or start and end value separated by space");
 		int start = 0;
@@ -36,7 +36,7 @@ public class TextInterface {
 		System.out.println("input rules in desired order, alphanumeric word and positive integer separated by underscore, rules separated by comma, e.g.:");
 		System.out.println("Fizz_5,Buzz_7,asdg67g_4");
 		input = inputscan.nextLine();
-		if (!input.matches("([a-zA-Z0-9]+[_][0-9]+)([,]([a-zA-Z0-9]+[_][0-9]+))*")) {
+		if (!input.matches("([a-zA-Z0-9\\s]+[_][0-9]+)([,]([a-zA-Z0-9\\s]+[_][0-9]+))*")) {
 			inputscan.close();
 			throw new IllegalArgumentException("bad rules");
 		}
