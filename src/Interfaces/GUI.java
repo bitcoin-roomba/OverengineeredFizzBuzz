@@ -94,7 +94,20 @@ public class GUI {
         add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buzzwords.add(new Buzzword(Integer.parseInt(numentry.getText()), wordentry.getText()));
+				try {
+					Integer.parseInt(numentry.getText());
+				}
+				catch(NumberFormatException ex) {
+					//invalid number
+					return;
+				}
+				try {
+					buzzwords.add(new Buzzword(Integer.parseInt(numentry.getText()), wordentry.getText()));
+				}
+				catch(IllegalArgumentException ex){
+					//cannot add zero rule
+					return;
+				}
 				rulestring = rulestring.concat(numentry.getText() + " | " + wordentry.getText() + "\n");
 				ruleview.setText(rulestring);
 				wordentry.setText("");
@@ -118,6 +131,18 @@ public class GUI {
         run.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer.parseInt(start.getText());
+					Integer.parseInt(end.getText());
+				}
+				catch(NumberFormatException nfe) {
+					//invalid interval
+					return;
+				}
+				if (Integer.parseInt(start.getText()) > Integer.parseInt(end.getText())) {
+					//start > end
+					return;
+				}
 				LinkedList<String> out = new FizzBuzz(Integer.parseInt(start.getText()), Integer.parseInt(end.getText()), buzzwords).getOutput();
 				JFrame outputframe = new JFrame("Output");
 				outputframe.setSize(400, 400);

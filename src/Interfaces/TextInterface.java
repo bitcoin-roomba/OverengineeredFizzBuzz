@@ -43,7 +43,12 @@ public class TextInterface {
 		LinkedList<Buzzword> buzzwords = new LinkedList<Buzzword>();
 		String[] rules = input.split(",");
 		for (int i = 0; i < rules.length; i++) {
-			buzzwords.add(new Buzzword(Integer.parseInt(rules[i].split("_")[1]), rules[i].split("_")[0]));
+			try {
+				buzzwords.add(new Buzzword(Integer.parseInt(rules[i].split("_")[1]), rules[i].split("_")[0]));
+			}
+			catch(IllegalArgumentException e) {
+				System.out.println("cannot add rule with 0");
+			}
 		}
 		FizzBuzz instance = new FizzBuzz(start, end, buzzwords);
 		instance.run();
