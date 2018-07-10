@@ -20,7 +20,7 @@ public class TextInterface {
 		}
 		
 		else if (input.matches("[-]?[0-9]+")) {
-			start = 0;
+			start = 1;
 			end = Integer.parseInt(input);
 		}
 		
